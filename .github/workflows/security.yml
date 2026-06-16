@@ -1,0 +1,69 @@
+name: Security
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  sast:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Semgrep
+        run: bash ./security/run-sast.sh
+
+      - name: Upload SAST reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: sast-reports
+          path: security/reports/semgrep*.json
+
+  sca:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Trivy SCA scan
+        run: bash ./security/run-sca.sh
+
+      - name: Upload SCA reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: sca-reports
+          path: security/reports/trivy-sca.json
+
+  dast:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create runtime env file
+        run: |
+          cat <<'EOF' > .env
+          POSTGRES_DB=notes
+          POSTGRES_USER=notes
+          POSTGRES_PASSWORD=github-actions-demo-password
+          EOF
+
+      - name: Run OWASP ZAP baseline
+        env:
+          DAST_TARGET: http://127.0.0.1:8080
+          ZAP_DOCKER_NETWORK_MODE: host
+        run: bash ./security/run-dast.sh
+
+      - name: Upload DAST reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: dast-reports
+          path: security/reports/zap-report.*

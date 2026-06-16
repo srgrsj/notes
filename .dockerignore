@@ -1,0 +1,6 @@
+.gradle
+build
+.idea
+.DS_Store
+docs
+notes-app-preview.png

@@ -1,0 +1,14 @@
+# OWASP ZAP baseline rule configuration
+# FAIL: issues we expect the application to fix
+# WARN: issues that are still useful to track but should not block the pipeline
+# IGNORE: obsolete or intentionally accepted checks
+10015	FAIL	(Incomplete or No Cache-control and Pragma HTTP Header Set)
+10016	IGNORE	(Web Browser XSS Protection Not Enabled)
+10017	WARN	(Cross-Domain JavaScript Source File Inclusion)
+10020	FAIL	(X-Frame-Options Header Not Set)
+10021	FAIL	(X-Content-Type-Options Header Missing)
+10025	FAIL	(Information Disclosure - Sensitive Information in HTTP Referrer Header)
+10035	FAIL	(Strict-Transport-Security Header Not Set)
+10038	FAIL	(Content Security Policy (CSP) Header Not Set)
+10063	FAIL	(Permissions Policy Header Not Set)
+10202	WARN	(Absence of Anti-CSRF Tokens)

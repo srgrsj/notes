@@ -1,0 +1,30 @@
+rules:
+  - id: hardcoded-secret-fallback
+    languages: [generic]
+    severity: ERROR
+    message: Do not use hardcoded fallback secrets in environment-variable lookups.
+    paths:
+      include:
+        - "**/src/main/kotlin/**/*.kt"
+        - "**/security/fixtures/**/*.kt"
+    pattern-regex: 'System\.getenv\(".*(PASSWORD|SECRET|TOKEN|KEY).*"\)\s*\?:\s*"[^"]+"'
+
+  - id: compose-hardcoded-password
+    languages: [generic]
+    severity: ERROR
+    message: Do not hardcode passwords in Compose files. Use environment variables or secrets.
+    paths:
+      include:
+        - "**/compose.yml"
+        - "**/compose.yaml"
+        - "**/docker-compose.yml"
+    pattern-regex: '^\s*(POSTGRES_PASSWORD|JDBC_DATABASE_PASSWORD):\s*["'']?(?!\$\{)[^"''\s#]+["'']?\s*$'
+
+  - id: sql-string-concatenation
+    languages: [generic]
+    severity: WARNING
+    message: Build SQL with placeholders instead of string concatenation.
+    paths:
+      include:
+        - "**/src/main/kotlin/**/*.kt"
+    pattern-regex: '(prepareStatement|executeQuery|executeUpdate)\(".*"\s*\+\s*[A-Za-z_]'
