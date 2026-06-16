@@ -47,19 +47,6 @@ docker compose up --build
 ./gradlew test
 ```
 
-## Security Scans
-
-Локальный запуск:
-
-```bash
-./security/run-sast.sh
-./security/run-sca.sh
-./security/run-dast.sh
-```
-
-Артефакты сканеров сохраняются в `security/reports`.
-Подробное описание инструментов, правил, найденных проблем и CI/CD находится в [SECURITY.md](SECURITY.md).
-
 ## API
 
 ### Получить все заметки
