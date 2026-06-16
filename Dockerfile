@@ -16,12 +16,13 @@ COPY src ./src
 RUN --mount=type=cache,target=/root/.gradle \
     ./gradlew buildFatJar --no-daemon
 
-FROM eclipse-temurin:21-jre
+FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 
 COPY --from=builder /app/build/libs/*-all.jar /app/app.jar
 
-RUN useradd --uid 10001 --create-home appuser \
+RUN apk --no-cache upgrade \
+    && adduser -D -u 10001 appuser \
     && chown -R appuser:appuser /app
 
 USER appuser

@@ -14,6 +14,16 @@ application {
 kotlin {
     jvmToolchain(21)
 }
+
+configurations.configureEach {
+    resolutionStrategy.eachDependency {
+        if (requested.group == "io.netty") {
+            useVersion("4.2.15.Final")
+            because("Trivy reports HIGH vulnerabilities in netty 4.2.13.Final")
+        }
+    }
+}
+
 dependencies {
     implementation(ktorLibs.server.config.yaml)
     implementation(ktorLibs.server.core)
