@@ -2,14 +2,6 @@
 
 Простое приложение для заметок на `Ktor` и `React`.
 
-## Что внутри
-
-- JSON API для заметок с CRUD-операциями
-- React-интерфейс, который открывается по адресу `http://localhost:8080`
-- Хранение заметок в PostgreSQL
-- Тесты на основные API-сценарии
-- Автоматизированные SAST, DAST и SCA проверки
-
 ## Запуск
 
 ```bash
@@ -46,19 +38,6 @@ docker compose up --build
 ```bash
 ./gradlew test
 ```
-
-## Security Scans
-
-Локальный запуск:
-
-```bash
-./security/run-sast.sh
-./security/run-sca.sh
-./security/run-dast.sh
-```
-
-Артефакты сканеров сохраняются в `security/reports`.
-Подробное описание инструментов, правил, найденных проблем и CI/CD находится в [SECURITY.md](SECURITY.md).
 
 ## API
 
